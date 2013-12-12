@@ -32,7 +32,7 @@
             // DOM isn't ready yet, retry later.
             if (attempts <= 200) {
                 // we'll try for 200 attempts, then give up.
-                setTimeout(enable_failover,100,attempts);
+                setTimeout(enable_failover,100,attempts++);
             }
             return; // try again shortly
         }
