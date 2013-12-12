@@ -1,8 +1,8 @@
 // smarter console
 (function(console_ref){
-    var debugging = true;
-    var old_support = false;
-    var failover_console = false;
+    var debugging = true; // enable logging of messages 
+    var old_support = false; // set to true if you want to create a console if none is found
+    var failover_console = false; 
 
     // method we'll shove in place to catch common use cases, also supports
     // using self built console if support is enabled and an existing console isn't
