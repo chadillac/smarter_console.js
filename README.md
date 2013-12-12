@@ -29,3 +29,10 @@ Just include the script in your page and use console.log and other methods as yo
 1. set var debugging = true in the script to default debugging everywhere
 2. run console.enabled_debugging() from console or any other script 
 3. add a check in the script that will automagically detect you're in a dev environment by sniffing URL or global and set debugging value accordingly
+
+
+**Future ideas/plans**
+
+1. add in page console/textarea for older browers with no native logging support
+2. ???
+3. profit.
