@@ -65,6 +65,8 @@
             if (debugging) {
                 if (typeof console_ref != 'undefined' && typeof console_ref[method] == 'function') {
                     return true; 
+                } else if (typeof console_ref[method] == 'object') {
+                    
                 }
             }
             return false;
@@ -76,13 +78,18 @@
         for (var method in console_ref) {
             if (typeof console[method] == 'undefined' || console[method] === failover) {
                 // create it, closure is to ensure method name sticks
-                (function(method_name){
-                     console[method_name] = function() {
-                        if (console.can_use(method_name)) {
-                            console_ref[method_name].apply(console_ref,arguments);
+                if (typeof console_ref[method] == 'function') {
+                    (function(method_name){
+                         console[method_name] = function() {
+                            if (console.can_use(method_name)) {
+                                console_ref[method_name].apply(console_ref,arguments);
+                            }
                         }
-                    }
-                })(method);
+                    })(method);
+                } else {
+                    // just store a reference to source, it's not an executable function
+                    console[method] = console_ref[method];    
+                }
             }
         }
     } else if (old_support) {
