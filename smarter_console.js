@@ -1,6 +1,6 @@
 // smarter console
 (function(console_ref){
-    var debugging = true; // enable logging of messages 
+    var debugging = false; // enable logging of messages 
     var old_support = false; // set to true if you want to create a console if none is found
     var failover_console = false; 
 
@@ -65,8 +65,6 @@
             if (debugging) {
                 if (typeof console_ref != 'undefined' && typeof console_ref[method] == 'function') {
                     return true; 
-                } else if (typeof console_ref[method] == 'object') {
-                    
                 }
             }
             return false;
