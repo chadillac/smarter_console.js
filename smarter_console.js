@@ -1,6 +1,25 @@
-// smarter console
+/*
+** smarter_console.js
+** Copyright (C) 2014 Chad Seaman
+** (https://github.com/chadillac/smarter_js_console/blob/master/LICENSE)
+** 
+** This program is free software; you can redistribute it and/or modify
+** it under the terms of the GNU General Public License as published by
+** the Free Software Foundation; either version 2 of the License, or
+** (at your option) any later version.
+** 
+** This program is distributed in the hope that it will be useful,
+** but WITHOUT ANY WARRANTY; without even the implied warranty of
+** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+** GNU General Public License for more details.
+** 
+** You should have received a copy of the GNU General Public License along
+** with this program; if not, write to the Free Software Foundation, Inc.,
+** 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*/
 (function(console_ref){
     var debugging = false; // enable logging of messages 
+    var trace = false; // stack trace all the things
     var old_support = false; // set to true if you want to create a console if none is found
     var failover_console = false; 
 
@@ -57,8 +76,19 @@
         trace:failover,
         enable_failover_support: enable_failover,
         // enabled debugging in production enviornments via console.enable_debugging
-        enable_debugging: function() {
-            debugging = true;
+        enable_debugging: function(enable) {
+            if (enable === true) {
+                debugging = true;
+                return;
+            }
+            enable = false;
+        },
+        enable_traces: function(enable) {
+            if (enable === true) { 
+                trace = true;
+                return;
+            }
+            trace = false;
         },
         can_use: function(method) {
             // if we're in a debugging env and have access to the method needed, use it.
@@ -81,6 +111,9 @@
                          console[method_name] = function() {
                             if (console.can_use(method_name)) {
                                 console_ref[method_name].apply(console_ref,arguments);
+                                if (trace === true && typeof console_ref.trace != 'undefined') {
+                                    console_ref.trace.apply(console_ref);
+                                }
                             }
                         }
                     })(method);
@@ -95,7 +128,7 @@
     }
 
     // enabled debugging by default on dev/staging 
-    //if ([HOWEVER YOU WANT TO GO ABOUT DETECTING A DEV ENVIORNMENT]) {
+    //if (window.location.href.indexOf('your.stagingdomain.com') != -1) {
     //    debugging = true;
     //}
 

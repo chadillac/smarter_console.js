@@ -16,7 +16,7 @@ We basically hijack the existing console and mirror it adding a layer of sanity 
 2. Do we have a console to use?
 3. Does it have the method I'm looking for?
 
-It also adds a few common use cases like log, warn, and trace with functions that do nothing intially.  This is to prevent older browsers from throwing fatal exceptions when attempting to use console.log without verifying that console exists and that it has a log method.
+It also adds a few common use cases like log, warn, and trace with functions that do nothing intially.  This is to prevent older browsers from throwing fatal exceptions when attempting to use console.log without verifying that console exists and that it has a log method.  I've also added some little helpers here and there like the ability to enable stack traces to all console calls (helpful with event driven models) that can be enabled and disabled easily.
 
 I essentially tried to make a library that made console interactions "set it and forget it" that would play nice with developers, third party libraries, and production enviornments.
 
@@ -27,5 +27,12 @@ Just include the script in your page and use console.log and other methods as yo
 ***Enabling***
 
 1. set var debugging = true in the script to default debugging everywhere
-2. run console.enabled_debugging() from console or any other script 
+2. run console.enable_debugging(true) from console or any other script (not passing true will disable it again)
 3. add a check in the script that will automagically detect you're in a dev environment by sniffing URL or global and set debugging value accordingly
+
+**Stack Trace all the things!!1!**
+***Enabling***
+
+1. make sure debugging is enabled
+2. run console.enable_traces(true) (not passing true will disable it again)
+3. as part of your debug by default check, you could set trace = true to have all calls dump a trace 
