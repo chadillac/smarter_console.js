@@ -1,4 +1,4 @@
-smarter_js_console
+smarter_console.js
 ==================
 
 A smarter javascript console for browsers old and new.
